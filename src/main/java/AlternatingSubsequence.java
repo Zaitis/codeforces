@@ -2,56 +2,47 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AlternatingSubsequence {
-    public AlternatingSubsequence() {
-    }
 
-    public Long alternatingSequence(int length, List<Long> list) {
-        Long tempResult;
+    public AlternatingSubsequence() { }
+
+    public Long calculateAlternatingSequence(int length, List<Long> numbers) {
         List<Long> tempSequence = new ArrayList<>();
-        Long result = Long.MIN_VALUE;
-        System.out.println(list);
+        Long maxSum = Long.MIN_VALUE;
 
         for (int i = 0; i < length - 1; i++) {
-            if (tempSequence.size() == 0) {
-                tempSequence.add(list.get(i));
+            if (tempSequence.isEmpty()) {
+                tempSequence.add(numbers.get(i));
+                continue;
             }
 
-            if (tempSequence.get(tempSequence.size() - 1) > 0) {
-                if (list.get(i + 1) < 0) {
-                    tempSequence.add(list.get(i + 1));
-                } else
-                {
-                    tempResult = tempSum(tempSequence);
-                    if (tempResult > result) result = tempResult;
-                    tempSequence.clear();
-                }
+            Long currentNumber = numbers.get(i + 1);
+            Long lastNumberInTempSequence = tempSequence.get(tempSequence.size() - 1);
+            
+            boolean canAddCurrentNumber = (lastNumberInTempSequence > 0 && currentNumber < 0) || (lastNumberInTempSequence < 0 && currentNumber > 0);
+            if (!canAddCurrentNumber) {
+                maxSum = updateMaxSumIfGreater(tempSequence, maxSum);
+                tempSequence.clear();
             }
-            if (tempSequence.get(tempSequence.size() - 1) < 0) {
-                if (list.get(i + 1) > 0) {
-                    tempSequence.add(list.get(i + 1));
-                } else {
-                    tempResult = tempSum(tempSequence);
-                    if (tempResult > result) result = tempResult;
-                    tempSequence.clear();
-                }
-            }
+            tempSequence.add(currentNumber);
         }
-        if (tempSequence.size() > 0) {
-            tempResult = tempSum(tempSequence);
-            if (tempResult > result) result = tempResult;
+
+        if (!tempSequence.isEmpty()) {
+            maxSum = updateMaxSumIfGreater(tempSequence, maxSum);
         }
-        System.out.println(result);
-        return result;
+
+        return maxSum;
     }
 
-    private Long tempSum(List<Long> tempSequence) {
-        Long result = 0L;
-        for (int i = 0; i < tempSequence.size(); i++) {
-            result += tempSequence.get(i);
+    private Long calculateSum(List<Long> sequence) {
+        Long sum = 0L;
+        for (Long number : sequence) {
+            sum += number;
         }
-        return result;
+        return sum;
     }
 
+    private Long updateMaxSumIfGreater(List<Long> sequence, Long currentMaxSum) {
+        Long sequenceSum = calculateSum(sequence);
+        return Math.max(sequenceSum, currentMaxSum);
+    }
 }
-
-
