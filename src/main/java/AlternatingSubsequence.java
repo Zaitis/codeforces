@@ -15,7 +15,6 @@ public class AlternatingSubsequence {
             if (tempSequence.size() == 0) {
                 tempSequence.add(list.get(i));
             }
-
             if (tempSequence.get(tempSequence.size() - 1) > 0) {
                 if (list.get(i + 1) < 0) {
                     tempSequence.add(list.get(i + 1));
