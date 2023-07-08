@@ -4,8 +4,9 @@ public class Main {
     public static void main(String[] args) {
       //  Scanner scanner = new Scanner(System.in);
      //   StoneGame stoneGame= new StoneGame();
-        Flowers flowers = new Flowers();
-        AlternatingSubsequence alternatingSubsequence = new AlternatingSubsequence();
+//        Flowers flowers = new Flowers();
+//        AlternatingSubsequence alternatingSubsequence = new AlternatingSubsequence();
+        new Vampire();
 
     }
 
